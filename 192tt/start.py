@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 import config
 
-def getSingleData(url,i = 1):
+def getSingleData(url,singleTitle,i = 1):
     response = requests.get(url)
     soup = BeautifulSoup(response.text,"html.parser")
     imgUrl = soup.find(id = 'p').find('center').find('img').get('lazysrc')
@@ -16,7 +17,7 @@ def getSingleData(url,i = 1):
         else:
             nextImg = response.url.replace('.html', '_%s.html'%j)
         # print nextImg
-        downImg(nextImg,i)
+        downImg(imgUrl,singleTitle,i)
         getSingleData(nextImg,j)
     except Exception,e:
         return 0
@@ -33,7 +34,7 @@ def getPage(url,new = 1,i = 1):
         except Exception,e:
             continue
         print singleTitle
-        getSingleData(singleDataUrl)
+        getSingleData(singleDataUrl,singleTitle)
     result = '_%s.html' % i in url
     j = i + 1
     if new != 1:
@@ -44,9 +45,15 @@ def getPage(url,new = 1,i = 1):
         else:
             nextPageUrl = url.replace(url, url+'/index_%s.html' % j)
     getPage(nextPageUrl,new,j)
-def downImg(img,m):
-    r = requests.get(img)
-    with open('./img/good%s.jpg' % m, 'wb') as f:
+def downImg(img,singleTitle,m):
+    try:
+        ua = UserAgent()
+        headers = {'User-Agent': ua.random, 'Referer': 'https://www.192tb.com'}
+        r = requests.get(img,headers=headers)
+    except Exception , e:
+        print "图片获取失败"
+        return
+    with open('./img/%s%s.jpg' % (singleTitle,m), 'wb') as f:
         f.write(r.content)
 if __name__ == '__main__':
     url = "https://www.192tb.com//meitu/85688.html"
@@ -56,4 +63,3 @@ if __name__ == '__main__':
         getPage(config.mt,0)
     elif s == 2:
         getPage(config.gc)
-    # getSingleData(url)
