@@ -63,4 +63,5 @@ if __name__ == '__main__':
     #     getPage(config.mt,0)
     # elif s == 2:
     #     getPage(config.gc)
+
     getSingleData('https://www.192tb.com//meitu/85114.html','气质美女琳希内衣美胸小蛮腰翘臀写真')
