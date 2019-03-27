@@ -56,10 +56,11 @@ def downImg(img,singleTitle,m):
     with open('./img/%s%s.jpg' % (singleTitle,m), 'wb') as f:
         f.write(r.content)
 if __name__ == '__main__':
-    url = "https://www.192tb.com//meitu/85688.html"
-    print '请输入需要爬取的页面 1.美图 2.国产'
-    s = input()
-    if s == 1:
-        getPage(config.mt,0)
-    elif s == 2:
-        getPage(config.gc)
+    # url = "https://www.192tb.com//meitu/85688.html"
+    # print '请输入需要爬取的页面 1.美图 2.国产'
+    # s = input()
+    # if s == 1:
+    #     getPage(config.mt,0)
+    # elif s == 2:
+    #     getPage(config.gc)
+    getSingleData('https://www.192tb.com//meitu/85114.html','气质美女琳希内衣美胸小蛮腰翘臀写真')
