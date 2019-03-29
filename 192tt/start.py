@@ -11,14 +11,13 @@ def getSingleData(url,singleTitle,i = 1):
     print imgUrl
     try:
         j = i + 1
-        result = '_%s.html'%i in url
+        result = '_%s.html' % i in url
         if result:
             nextImg = response.url.replace('_%s.html'%i, '_%s.html'%j)
         else:
             nextImg = response.url.replace('.html', '_%s.html'%j)
-        # print nextImg
         downImg(imgUrl,singleTitle,i)
-        getSingleData(nextImg,j)
+        getSingleData(nextImg,singleTitle,j)
     except Exception,e:
         return 0
 def getPage(url,new = 1,i = 1):
@@ -53,15 +52,14 @@ def downImg(img,singleTitle,m):
     except Exception , e:
         print "图片获取失败"
         return
-    with open('./img/%s%s.jpg' % (singleTitle,m), 'wb') as f:
+    with open('./img/[sbcoder.cn]_%s_%s.jpg' % (singleTitle,m), 'wb') as f:
         f.write(r.content)
 if __name__ == '__main__':
-    # url = "https://www.192tb.com//meitu/85688.html"
+    url = "https://www.192tb.com//meitu/85688.html"
     # print '请输入需要爬取的页面 1.美图 2.国产'
     # s = input()
     # if s == 1:
     #     getPage(config.mt,0)
     # elif s == 2:
     #     getPage(config.gc)
-
-    getSingleData('https://www.192tb.com//meitu/85114.html','气质美女琳希内衣美胸小蛮腰翘臀写真')
+    getSingleData(url,11)
