@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
-import urllib2
 import random
 
 def spy(url):
-    req = urllib2.Request(url)
-    req = urllib2.urlopen(req)
-    page = req.read()
-    soup = BeautifulSoup(page, "html.parser")
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
     for imgSoup in soup.find_all('div', {"class": "row"}):
         for i in imgSoup.find_all('div', {'class': 'photo'}):
             for j in i.find('div', {'class': 'photo-link-outer'}).find('a').find_all('img'):
