@@ -2,13 +2,14 @@
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+import json
 import config
 
 def getSingleData(url,singleTitle,i = 1):
     response = requests.get(url)
     soup = BeautifulSoup(response.text,"html.parser")
     imgUrl = soup.find(id = 'p').find('center').find('img').get('lazysrc')
-    print imgUrl
+    # print imgUrl
     try:
         j = i + 1
         result = '_%s.html' % i in url
@@ -16,10 +17,30 @@ def getSingleData(url,singleTitle,i = 1):
             nextImg = response.url.replace('_%s.html'%i, '_%s.html'%j)
         else:
             nextImg = response.url.replace('.html', '_%s.html'%j)
-        downImg(imgUrl,singleTitle,i)
+        # downImg(imgUrl,singleTitle,i)
+        dd = {
+            'url' : imgUrl,
+        }
+        doPost(dd)
         getSingleData(nextImg,singleTitle,j)
     except Exception,e:
         return 0
+
+def doPost(dd,fa=[0],tr=[0]):
+    url = 'https://api.0161.org/sinaimg/sinaImg.php'
+    response = requests.post(url, dd)
+    result = json.loads(response.text)
+    resImgUrl = result['large'].replace('bmiddle','large')
+    print resImgUrl
+    if response.status_code == 200 and result['large']:
+        t = tr[0] + 1
+        tr[0] = t
+        print "成功上传%s张图片！"%t
+    else:
+        f = fa[0] + 1
+        fa[0] = f
+        print "失败%s张图片！"%f
+
 def getPage(url,new = 1,i = 1):
     print '开始采集第%s页'%i
     print url
