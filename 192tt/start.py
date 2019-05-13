@@ -84,3 +84,5 @@ if __name__ == '__main__':
     # elif s == 2:
     #     getPage(config.gc)
     getSingleData(url,11)
+
+    print '程序执行完毕'
