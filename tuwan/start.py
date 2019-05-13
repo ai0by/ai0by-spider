@@ -61,6 +61,7 @@ if __name__ == '__main__':
             tuwan.getData(url)
             startId = startId + 1
         except Exception as e:
-            print '当前ID错误:%s'% startId
+            print ('当前ID错误:%s'% startId)
             print e
 
+##  本程序 来源于 20发福利资源网，请您在使用或者转载时保留出处，不要删除本行！
