@@ -50,7 +50,6 @@ if __name__ == '__main__':
     sys.setdefaultencoding('utf8')
     tuwan = Tuwan()
     print ('本程序由20发福利资源网提供 https://www.20fa.club')
-    url = 'https://api.tuwan.com/apps/Welfare/detail?id='
     print ('请输入起始ID')
     startId = int(input())
     print ('请输入结束ID')
