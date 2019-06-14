@@ -2,7 +2,32 @@
 import requests
 from bs4 import BeautifulSoup
 import re,os
-
+def getPageUrl(cate,num):
+    url = 'https://www.mm131.net/'+cate
+    response = requests.get(url,headers=headers)
+    response.encoding = 'gb2312'
+    soup = BeautifulSoup(response.text,'html.parser')
+    endPage = 0
+    for i in soup.find('dl',{'class':'public-box'}).find_all('dd'):
+        try:
+            i.find('img').get('src')
+        except Exception as e:
+            for s in i.find_all('a'):
+                endPage = s.get('href')
+            endPage = rex('list_%s_(\d+).html'%num,endPage)
+            continue
+        getSingleData(i.find('a').get('href'))
+    for i in range(int(endPage)-1):
+        nextUrl = "%s/list_%s_%s.html"%(url,num,i+2)
+        response = requests.get(nextUrl, headers=headers)
+        response.encoding = 'gb2312'
+        soup = BeautifulSoup(response.text, 'html.parser')
+        for i in soup.find('dl', {'class': 'public-box'}).find_all('dd'):
+            try:
+                i.find('img').get('src')
+            except Exception as e:
+                continue
+            getSingleData(i.find('a').get('href'))
 def getSingleData(url):
     imgId = rex('.*/(\d+).html',url)
     response = requests.get(url,headers=headers)
@@ -45,5 +70,5 @@ if __name__ == '__main__':
     list = {'xinggan':6,'qingchun':1,'xiaohua':2,'chemo':3,'qipao':4,'mingxing':5}
 
     for key in list:
-        print("%s:%s"%(key,list[key]))
+        getPageUrl(key,list[key])
     # getSingleData('https://www.mm131.net/xinggan/4995.html')
