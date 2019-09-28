@@ -2,7 +2,6 @@
 import requests
 import json
 import base64
-import sys
 import os
 
 class Tuwan:
@@ -33,23 +32,21 @@ class Tuwan:
         if not isExists:
             os.makedirs('./'+title)
         else:
-            print '当前资源已存在，自动跳过'
+            print ('当前资源已存在，自动跳过')
             return
         for i in range(len(imgData)):
             try:
                 print ('正在下载第 %s 张' % i)
                 r = requests.get(imgData[i])
-            except Exception, e:
-                print "图片获取失败"
+            except Exception as e:
+                print ("图片获取失败")
                 return
             with open('./%s/[20FA]_%s.jpg'%(title,i+1), 'wb') as f:
                 f.write(r.content)
         return
 if __name__ == '__main__':
-    reload(sys)
-    sys.setdefaultencoding('utf8')
     tuwan = Tuwan()
-    print ('本程序由20发福利资源网提供 https://www.20fa.club')
+    print ('本程序由风向标博客提供 sbcoder.cn')
     print ('请输入起始ID')
     startId = int(input())
     print ('请输入结束ID')
@@ -61,6 +58,4 @@ if __name__ == '__main__':
             startId = startId + 1
         except Exception as e:
             print ('当前ID错误:%s'% startId)
-            print e
-
-##  本程序 来源于 20发福利资源网，请您在使用或者转载时保留出处，不要删除本行！
+            print (e)
