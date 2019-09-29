@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 import json
-import config
+from . import config
 
 def getSingleData(url,singleTitle,i = 1):
     response = requests.get(url)
@@ -23,7 +23,7 @@ def getSingleData(url,singleTitle,i = 1):
         }
         doPost(dd)
         getSingleData(nextImg,singleTitle,j)
-    except Exception,e:
+    except Exception as e:
         return 0
 
 def doPost(dd,fa=[0],tr=[0]):
@@ -31,29 +31,29 @@ def doPost(dd,fa=[0],tr=[0]):
     response = requests.post(url, dd)
     result = json.loads(response.text)
     resImgUrl = result['large'].replace('bmiddle','large')
-    print resImgUrl
+    print (resImgUrl)
     if response.status_code == 200 and result['large']:
         t = tr[0] + 1
         tr[0] = t
-        print "成功上传%s张图片！"%t
+        print ("成功上传%s张图片！"%t)
     else:
         f = fa[0] + 1
         fa[0] = f
-        print "失败%s张图片！"%f
+        print ("失败%s张图片！"%f)
 
 def getPage(url,new = 1,i = 1):
-    print '开始采集第%s页'%i
-    print url
+    print ('开始采集第%s页'%i)
+    print (url)
     response = requests.get(url)
     soup = BeautifulSoup(response.text,"html.parser")
     for dataUrl in soup.find('div',{'class':'piclist'}).find('ul').find_all('li'):
         singleDataUrl = 'https://www.192tb.com/'+dataUrl.find('a').get('href')
-        print singleDataUrl
+        print (singleDataUrl)
         try:
             singleTitle = dataUrl.find('a').find('img').get('alt')
-        except Exception,e:
+        except Exception as e:
             continue
-        print singleTitle
+        print (singleTitle)
         getSingleData(singleDataUrl,singleTitle)
     result = '_%s.html' % i in url
     j = i + 1
@@ -70,8 +70,8 @@ def downImg(img,singleTitle,m):
         ua = UserAgent()
         headers = {'User-Agent': ua.random, 'Referer': 'https://www.192tb.com'}
         r = requests.get(img,headers=headers)
-    except Exception , e:
-        print "图片获取失败"
+    except Exception as e:
+        print ("图片获取失败")
         return
     with open('./img/[sbcoder.cn]_%s_%s.jpg' % (singleTitle,m), 'wb') as f:
         f.write(r.content)
@@ -85,4 +85,4 @@ if __name__ == '__main__':
     #     getPage(config.gc)
     getSingleData(url,11)
 
-    print '程序执行完毕'
+    print ('程序执行完毕')

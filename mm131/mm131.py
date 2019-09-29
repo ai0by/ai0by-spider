@@ -56,7 +56,7 @@ def downImg(imgId,imgNum,path):
             r = requests.get(imgurl,headers=headers)
         except Exception as e:
             print('图片获取失败')
-        with open('%s/[20FA]_%s.jpg'%(path,i+1), 'wb') as f:
+        with open('%s/[Sbcoder]_%s.jpg'%(path,i+1), 'wb') as f:
             f.write(r.content)
 def rex(regexStr,str1):
     reMatch = re.match(regexStr, str1)

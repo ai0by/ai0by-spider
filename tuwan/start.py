@@ -41,7 +41,7 @@ class Tuwan:
             except Exception as e:
                 print ("图片获取失败")
                 return
-            with open('./%s/[20FA]_%s.jpg'%(title,i+1), 'wb') as f:
+            with open('./%s/[Sbcoder]_%s.jpg'%(title,i+1), 'wb') as f:
                 f.write(r.content)
         return
 if __name__ == '__main__':
