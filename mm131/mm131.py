@@ -62,7 +62,7 @@ def rex(regexStr,str1):
     reMatch = re.match(regexStr, str1)
     return reMatch.group(1)
 if __name__ == '__main__':
-    print('本程序来源 20发福利资源网 www.20fa.vip')
+    print('本程序来源 风向标博客 sbcoder.cn')
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
         'referer': "http://www.mm131.com/xinggan/4995.html",
